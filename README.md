@@ -98,6 +98,25 @@ http://127.0.0.1:8000
 The system can be deployed as a containerized FastAPI service. Lightweight deployments can run on platforms like Render, while heavier LLM-based versions are suitable for HuggingFace Spaces or cloud VM infrastructure.
 
 ---
+## Mandatory Explanations
 
-## Author
-Yogesh Kardile  
+### 1. Chunk Size Selection
+I used a chunk size of approximately 500 characters with overlap.  
+This size provides a balance between context richness and embedding quality.  
+Smaller chunks may lose semantic meaning, while very large chunks reduce retrieval precision because embeddings become less specific. This size ensures relevant sections of the document are retrieved without exceeding model context limits.
+
+---
+
+### 2. Retrieval Failure Case Observed
+One failure case occurred when the uploaded PDF contained scanned or poorly encoded text. The text extraction step returned very little readable text, resulting in zero or low-quality chunks being stored in the vector database. This led to the system returning "No relevant information found."  
+To mitigate this, a readability check was added to detect low-text documents and notify the user.
+
+---
+
+### 3. Metric Tracked
+Latency was informally tracked during testing. The main latency sources were:
+- Embedding generation
+- FAISS similarity search
+- Local LLM response generation
+
+The average response time after the model was loaded was around a few seconds. Cold starts caused longer delays due to model loading time.
