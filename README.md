@@ -5,6 +5,9 @@ This project implements a Retrieval-Augmented Generation (RAG) system that allow
 
 ---
 
+## Live Demo : 
+https://huggingface.co/spaces/Yogesh942134/rag-document-qa
+
 ## Features
 - Upload PDF and TXT documents  
 - Automatic chunking and embedding generation  
