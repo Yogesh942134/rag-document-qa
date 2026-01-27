@@ -7,3 +7,6 @@ sentence-transformers
 PyPDF2
 openai
 slowapi
+torch
+transformers
+pymupdf
