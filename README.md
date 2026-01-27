@@ -43,7 +43,7 @@ templates/index.html  # Web UI
 
 ### 1. Clone Repository
 ```
-git clone https://github.com/YOUR_USERNAME/rag-document-qa.git
+git clone https://github.com/Yogesh942134/rag-document-qa.git
 cd rag-document-qa
 ```
 
