@@ -1,122 +1,135 @@
-# RAG-Based Question Answering System
+# 📚 RAG-Based Document Question Answering System
 
-## Overview
-This project implements a Retrieval-Augmented Generation (RAG) system that allows users to upload documents and ask questions based on those documents. The system retrieves relevant document chunks using vector similarity and generates answers using a language model.
+A full-stack **Retrieval-Augmented Generation (RAG)** application that allows users to upload documents and ask natural language questions. The system retrieves relevant content using vector similarity search and generates accurate answers using a language model.
 
----
-
-## Live Demo : 
-https://huggingface.co/spaces/Yogesh942134/rag-document-qa
-
-## Features
-- Upload PDF and TXT documents  
-- Automatic chunking and embedding generation  
-- FAISS vector similarity search  
-- Question answering using retrieved context  
-- FastAPI backend  
-- Web-based user interface  
-- Background document ingestion  
+🔗 **Live Demo:** https://huggingface.co/spaces/Yogesh942134/rag-document-qa
 
 ---
 
-## Tech Stack
-- FastAPI  
-- SentenceTransformers  
-- FAISS  
-- Transformers (Local LLM) / OpenAI API  
-- HTML + JavaScript  
+## 🚀 What This Project Does
+
+Instead of relying only on a language model’s internal knowledge, this system:
+
+1. Accepts user-uploaded documents  
+2. Converts document text into vector embeddings  
+3. Stores them in a high-performance vector database  
+4. Retrieves the most relevant document chunks  
+5. Generates answers grounded in the uploaded content  
+
+This enables **context-aware, document-specific question answering**.
 
 ---
 
-## Project Structure
+## 🧠 Key Features
+
+- 📄 Upload **PDF** and **TXT** files  
+- ✂️ Intelligent document **chunking with overlap**  
+- 🔢 Embedding generation using SentenceTransformers  
+- ⚡ Fast similarity search with FAISS  
+- 🤖 Answer generation using:
+  - Local Transformer models  
+  - Or external APIs like OpenAI  
+- 🌐 Interactive Web Interface  
+- 🔄 Background document processing  
+- 🧩 Modular backend architecture  
+
+---
+
+## 🏗️ System Architecture
+
+**Pipeline Flow:**
+
+**User Document → Text Extraction → Chunking → Embeddings → FAISS Index → Query → Retrieval → LLM → Answer**
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|------|------------|
+| Backend API | FastAPI |
+| Embeddings | SentenceTransformers |
+| Vector Search | FAISS |
+| Language Model | Hugging Face Transformers / OpenAI API |
+| Frontend | HTML + JavaScript |
+| Deployment | HuggingFace Spaces / Cloud / Containers |
+
+---
+
+## 📂 Project Structure
+
 ```
-app.py                # FastAPI entry point
-background_tasks.py   # Document ingestion
-ingestion.py          # Text extraction
-chunking.py           # Document chunking
-embeddings.py         # Embedding model
-vector_store.py       # FAISS index
-qa_service.py         # Retrieval + generation
-templates/index.html  # Web UI
+app.py                # FastAPI application entry
+background_tasks.py   # Async document ingestion
+ingestion.py          # Text extraction from files
+chunking.py           # Document chunking logic
+embeddings.py         # Embedding model wrapper
+vector_store.py       # FAISS index management
+qa_service.py         # Retrieval + answer generation
+templates/index.html  # Web interface
 ```
 
 ---
 
-## Setup Instructions
+## ⚙️ Installation
 
-### 1. Clone Repository
-```
+```bash
 git clone https://github.com/Yogesh942134/rag-document-qa.git
 cd rag-document-qa
-```
 
-### 2. Create Virtual Environment
-```
 python -m venv venv
-venv\Scripts\activate
-```
+venv\Scripts\activate   # Windows
 
-### 3. Install Dependencies
-```
 pip install -r requirements.txt
-```
-
-### 4. Run Server
-```
 uvicorn app:app --reload
 ```
 
-### 5. Open in Browser
-```
-http://127.0.0.1:8000
-```
+Then open:  
+👉 http://127.0.0.1:8000
 
 ---
 
-## How It Works
-1. User uploads document  
-2. Background task extracts text  
-3. Text is chunked and embedded  
-4. Embeddings stored in FAISS  
-5. User asks question  
-6. Relevant chunks retrieved  
-7. LLM generates final answer  
+## 🔍 How Retrieval Works
+
+- Documents are split into ~**500-character chunks with overlap**
+- Each chunk is converted into a dense vector embedding
+- User queries are embedded into the same vector space
+- **Similarity search** retrieves top-k relevant chunks
+- The LLM generates answers using only retrieved context
+
+This improves:
+- Accuracy  
+- Factual grounding  
+- Domain adaptation  
 
 ---
 
-## Evaluation Points Covered
-- Custom chunking strategy  
-- Vector similarity retrieval  
-- Background processing  
-- API design with validation  
-- Retrieval failure handling  
-- Latency awareness  
+## ⚡ Performance Considerations
+
+- Background processing prevents UI blocking  
+- FAISS enables fast large-scale similarity search  
+- Cold start latency mainly from model loading  
+- Designed for scalable document-based AI systems  
 
 ---
 
-## Deployment
-The system can be deployed as a containerized FastAPI service. Lightweight deployments can run on platforms like Render, while heavier LLM-based versions are suitable for HuggingFace Spaces or cloud VM infrastructure.
+## 🌍 Deployment Options
 
----
-## Mandatory Explanations
+This project can be deployed on:
 
-### 1. Chunk Size Selection
-I used a chunk size of approximately 500 characters with overlap.  
-This size provides a balance between context richness and embedding quality.  
-Smaller chunks may lose semantic meaning, while very large chunks reduce retrieval precision because embeddings become less specific. This size ensures relevant sections of the document are retrieved without exceeding model context limits.
-
----
-
-### 2. Retrieval Failure Case Observed
-One failure case occurred when the uploaded PDF contained scanned or poorly encoded text. The text extraction step returned very little readable text, resulting in zero or low-quality chunks being stored in the vector database. This led to the system returning "No relevant information found."  
-To mitigate this, a readability check was added to detect low-text documents and notify the user.
+- HuggingFace Spaces (recommended for demos)
+- Cloud VM (for local LLM hosting)
+- Containerized FastAPI service
+- Render / Railway for API-based versions
 
 ---
 
-### 3. Metric Tracked
-Latency was informally tracked during testing. The main latency sources were:
-- Embedding generation
-- FAISS similarity search
-- Local LLM response generation
+## 🎯 Use Cases
 
-The average response time after the model was loaded was around a few seconds. Cold starts caused longer delays due to model loading time.
+- Research paper Q&A  
+- Legal or policy document search  
+- Internal company knowledge base  
+- Educational material assistant  
+- Resume / report analysis  
+
+---
