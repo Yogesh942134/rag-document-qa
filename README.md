@@ -1,135 +1,163 @@
-# 📚 RAG-Based Document Question Answering System
+# RAG-Based Document Question Answering System
 
-A full-stack **Retrieval-Augmented Generation (RAG)** application that allows users to upload documents and ask natural language questions. The system retrieves relevant content using vector similarity search and generates accurate answers using a language model.
+A full-stack Retrieval-Augmented Generation (RAG) application that allows users to upload documents and ask natural language questions. The system retrieves relevant content using vector similarity search and generates accurate answers using a language model.
 
-🔗 **Live Demo:** https://huggingface.co/spaces/Yogesh942134/rag-document-qa
+## Live Demo
 
----
+https://huggingface.co/spaces/Yogesh942134/rag-document-qa
 
-## 🚀 What This Project Does
 
-Instead of relying only on a language model’s internal knowledge, this system:
+## Overview
 
-1. Accepts user-uploaded documents  
-2. Converts document text into vector embeddings  
-3. Stores them in a high-performance vector database  
-4. Retrieves the most relevant document chunks  
-5. Generates answers grounded in the uploaded content  
+Traditional language models rely only on pretrained knowledge. This project improves response accuracy by retrieving relevant information directly from uploaded documents before generating answers.
 
-This enables **context-aware, document-specific question answering**.
+The system workflow:
 
----
+1. Accept user-uploaded documents
+2. Extract and process text
+3. Generate vector embeddings
+4. Store embeddings in a FAISS vector index
+5. Retrieve relevant document chunks
+6. Generate answers grounded in retrieved context
 
-## 🧠 Key Features
+This enables context-aware and document-specific question answering.
 
-- 📄 Upload **PDF** and **TXT** files  
-- ✂️ Intelligent document **chunking with overlap**  
-- 🔢 Embedding generation using SentenceTransformers  
-- ⚡ Fast similarity search with FAISS  
-- 🤖 Answer generation using:
-  - Local Transformer models  
-  - Or external APIs like OpenAI  
-- 🌐 Interactive Web Interface  
-- 🔄 Background document processing  
-- 🧩 Modular backend architecture  
 
----
+## Features
 
-## 🏗️ System Architecture
+- Support for PDF and TXT document uploads
+- Intelligent document chunking with overlap
+- Embedding generation using SentenceTransformers
+- Fast similarity search using FAISS
+- Answer generation using:
+  - Local Transformer models
+  - OpenAI API
+- Interactive web interface
+- Background document ingestion
+- Modular backend architecture
 
-**Pipeline Flow:**
 
-**User Document → Text Extraction → Chunking → Embeddings → FAISS Index → Query → Retrieval → LLM → Answer**
 
----
+## System Architecture
 
-## 🛠️ Tech Stack
+### Pipeline
 
-| Layer | Technology |
-|------|------------|
+```text
+User Document
+      ↓
+Text Extraction
+      ↓
+Chunking
+      ↓
+Embeddings
+      ↓
+FAISS Index
+      ↓
+Query Processing
+      ↓
+Relevant Retrieval
+      ↓
+Language Model
+      ↓
+Generated Answer
+```
+
+
+## Tech Stack
+
+| Component | Technology |
+|---|---|
 | Backend API | FastAPI |
 | Embeddings | SentenceTransformers |
-| Vector Search | FAISS |
+| Vector Database | FAISS |
 | Language Model | Hugging Face Transformers / OpenAI API |
-| Frontend | HTML + JavaScript |
-| Deployment | HuggingFace Spaces / Cloud / Containers |
+| Frontend | HTML, JavaScript |
+| Deployment | Hugging Face Spaces, Cloud, Containers |
 
----
 
-## 📂 Project Structure
+## Project Structure
 
-```
-app.py                # FastAPI application entry
-background_tasks.py   # Async document ingestion
-ingestion.py          # Text extraction from files
+```text
+app.py                # FastAPI application entry point
+background_tasks.py   # Background document ingestion
+ingestion.py          # File text extraction
 chunking.py           # Document chunking logic
 embeddings.py         # Embedding model wrapper
 vector_store.py       # FAISS index management
-qa_service.py         # Retrieval + answer generation
-templates/index.html  # Web interface
+qa_service.py         # Retrieval and answer generation
+templates/index.html  # Frontend interface
 ```
 
----
 
-## ⚙️ Installation
+## Installation
 
 ```bash
 git clone https://github.com/Yogesh942134/rag-document-qa.git
+
 cd rag-document-qa
 
 python -m venv venv
-venv\Scripts\activate   # Windows
+
+# Windows
+venv\Scripts\activate
+
+# Linux / Mac
+source venv/bin/activate
 
 pip install -r requirements.txt
+
 uvicorn app:app --reload
 ```
 
-Then open:  
-👉 http://127.0.0.1:8000
+Open the application at:
+
+```text
+http://127.0.0.1:8000
+```
 
 ---
 
-## 🔍 How Retrieval Works
+## Retrieval Process
 
-- Documents are split into ~**500-character chunks with overlap**
+- Documents are divided into approximately 500-character chunks with overlap
 - Each chunk is converted into a dense vector embedding
 - User queries are embedded into the same vector space
-- **Similarity search** retrieves top-k relevant chunks
-- The LLM generates answers using only retrieved context
+- Similarity search retrieves the most relevant chunks
+- The language model generates answers using retrieved context only
 
-This improves:
-- Accuracy  
-- Factual grounding  
-- Domain adaptation  
+### Benefits
 
----
+- Improved factual accuracy
+- Better contextual grounding
+- Domain-specific adaptability
+- Reduced hallucinations
 
-## ⚡ Performance Considerations
 
-- Background processing prevents UI blocking  
-- FAISS enables fast large-scale similarity search  
-- Cold start latency mainly from model loading  
-- Designed for scalable document-based AI systems  
 
----
+## Performance Considerations
 
-## 🌍 Deployment Options
+- Background processing avoids blocking the user interface
+- FAISS enables efficient large-scale vector similarity search
+- Initial latency mainly comes from model loading
+- Architecture designed for scalable document-based AI systems
 
-This project can be deployed on:
 
-- HuggingFace Spaces (recommended for demos)
-- Cloud VM (for local LLM hosting)
-- Containerized FastAPI service
-- Render / Railway for API-based versions
+## Deployment Options
 
----
+This project can be deployed using:
 
-## 🎯 Use Cases
+- Hugging Face Spaces
+- Cloud virtual machines
+- Containerized FastAPI services
+- Render
+- Railway
 
-- Research paper Q&A  
-- Legal or policy document search  
-- Internal company knowledge base  
-- Educational material assistant  
-- Resume / report analysis  
 
----
+## Use Cases
+
+- Research paper question answering
+- Legal and policy document analysis
+- Internal company knowledge bases
+- Educational assistants
+- Resume and report analysis
+
